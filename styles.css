@@ -1,0 +1,87 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 10px;
+    max-width: 350px;
+    margin: auto;
+}
+#chatForm h3 {
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    padding: 12px;
+    border-radius: 6px 6px 0 0;
+    margin: -16px -16px 16px -16px;
+}
+label, select, input, textarea, button {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+select, input, textarea {
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.required {
+    color: red;
+    margin-left: 2px;
+}
+button {
+    background-color: #0073bb;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+button:hover {
+    background-color: #005b96;
+}
+#chatToggleContainer {
+    bottom: -10px;
+    transition: bottom 0.3s ease;
+    position: fixed;
+    right: 360px;
+    z-index: 999;
+}
+
+#chatToggleContainer.open {
+    bottom: 530px;
+}
+.acWidgetContainer-0-0-1 {
+    display: none;
+}
+@media (max-width: 800px) {
+    #formWrapper {
+        right: 30px !important;
+    }
+
+    #chatToggleContainer {
+        right: 130px !important;
+    }
+}
+
+@media (max-width: 575px) {
+    #formWrapper {
+        right: 15px !important;
+        width: 100% !important;
+        max-width: 320px !important;
+    }
+
+    #chatToggleContainer {
+        right: 115px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    #formWrapper {
+        right: 10px !important;
+        width: 100% !important;
+        max-width: 300px !important;
+    }
+
+    #chatToggleContainer {
+        right: 110px !important;
+    }
+}
