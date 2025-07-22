@@ -42,6 +42,39 @@
         <button type="submit">Start Chat</button>
     </form>
 </div>
+
+<div id="surveyWrapper" style="display: none;">
+    <form id="surveyForm">
+        <h3>Post‑Chat Survey</h3>
+
+        <fieldset class="surveyQuestion">
+            <legend>1. How satisfied are you with your overall experience?</legend>
+
+            <div class="scaleLabels">
+                <span>1 (Extremely Satisfied)</span>
+                <span>5 (Extremely Dissatisfied)</span>
+            </div>
+
+            <div class="radioGroup horizontal">
+                <label><input type="radio" name="satisfaction" value="1" required>1</label>
+                <label><input type="radio" name="satisfaction" value="2">2</label>
+                <label><input type="radio" name="satisfaction" value="3">3</label>
+                <label><input type="radio" name="satisfaction" value="4">4</label>
+                <label><input type="radio" name="satisfaction" value="5">5</label>
+            </div>
+        </fieldset>
+
+        <fieldset class="surveyQuestion">
+            <legend>2. How satisfied are you with the product you purchased?</legend>
+            <div class="radioGroup horizontal">
+                <label><input type="radio" name="productSatisfaction" value="1" required> Satisfied</label>
+                <label><input type="radio" name="productSatisfaction" value="2"> Unsatisfied</label>
+            </div>
+        </fieldset>
+
+        <button type="submit" class="surveyButton">Submit Survey</button>
+    </form>
+</div>
     <script src="script.js"></script>
 </body>
 </html>
