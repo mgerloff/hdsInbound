@@ -1,23 +1,31 @@
 const END_REGEX = /(chat has ended!?|customer has left the chat)/i;
 
 function startEndPoll() {
-    let ticks = 0;
-    const maxTicks = 300; // ~90s
+    const INTERVAL = 400;
+    const SEARCH_TIMEOUT = 10000;
+    const start = Date.now();
+    let iframeFound = false;
+
     const timer = setInterval(() => {
         const iframe = document.querySelector('iframe[id^="amazon-connect-chat-widget-iframe"]');
-        if (!iframe) { if (++ticks > maxTicks) clearInterval(timer); return; }
+        if (!iframe) {
+            if (!iframeFound && Date.now() - start > SEARCH_TIMEOUT) {
+                clearInterval(timer);
+            }
+            return;
+        }
+
+        iframeFound = true;
 
         const doc = iframe.contentDocument || iframe.contentWindow?.document;
-        if (!doc) { if (++ticks > maxTicks) clearInterval(timer); return; }
+        if (!doc) return;
 
         const txt = doc.body?.innerText || "";
         if (END_REGEX.test(txt)) {
             clearInterval(timer);
             setTimeout(() => location.reload(), 1200);
         }
-
-        if (++ticks > maxTicks) clearInterval(timer);
-    }, 300);
+    }, INTERVAL);
 }
 
 function isWithinBusinessHours() {
@@ -62,18 +70,18 @@ window.onload = function () {
 
         (function(w, d, x, id){
             const s = d.createElement('script');
-            s.src='https://p3fusion-learning.my.connect.aws/connectwidget/static/amazon-connect-chat-interface-client.js';
+            s.src='https://sharecare-hds-dev-p3f.my.connect.aws/connectwidget/static/amazon-connect-chat-interface-client.js';
             s.async=1; s.id=id;
             d.getElementsByTagName('head')[0].appendChild(s);
             w[x] = w[x] || function(){ (w[x].ac = w[x].ac || []).push(arguments) };
-        })(window, document, 'amazon_connect', '9ff93ffd-9c5a-4f11-a113-7a29bfed1b13');
+        })(window, document, 'amazon_connect', '5b13b062-7453-441f-82bb-1217aa9bc919');
 
         amazon_connect('styles', {
             iconType: 'CHAT',
             openChat:  { color: '#ffffff', backgroundColor: '#123456' },
             closeChat: { color: '#ffffff', backgroundColor: '#123456' }
         });
-        amazon_connect('snippetId', 'QVFJREFIaXdlaTllQXR1SnQyK1JZc1Z3dWE3clBZQjQvWm15emlVb25scEltc3BJNmdGaWRzWmZhQTFZcWcxa0NOS0t5OVVvQUFBQWJqQnNCZ2txaGtpRzl3MEJCd2FnWHpCZEFnRUFNRmdHQ1NxR1NJYjNEUUVIQVRBZUJnbGdoa2dCWlFNRUFTNHdFUVFNQk5lVkVocnBFRlZRRVlScEFnRVFnQ3N4SnMxdkdFZktKSWJYNEkxU0lRaFZkWHRtMkdLQi91b0JIbTQzTEI1WGJkV0kyd2UvOTNXWlhIck46OkQ2cWR4dndFVUZWNzk5bVV4aWM2cDh4ajdVanNBb2RxQWJFK3Q0UU5RZUl3QU1CcklpMWZUS1hHck4yd2dVUGZMMjNlOFhvTTFIUUZQVnV2WVVESkMzcktEN0xHUkpPQlIvd1g2NDhlMU5lVjRqRnRydldEYmxDdE1xbUxvUUZZSWF6Z1kzaUJkTThUZUlZZ294azdVNisrYzFjdVEyVT0=');
+        amazon_connect('snippetId', 'QVFJREFIaFg3VVJ2dFRXb2IrUUdndUkvUzRJMnRnQ1NJL3Erc1JKT0lFQ3lCQlNlUEFFNWJjR1psVzREczdZQ3BhYzIxMk9VQUFBQWJqQnNCZ2txaGtpRzl3MEJCd2FnWHpCZEFnRUFNRmdHQ1NxR1NJYjNEUUVIQVRBZUJnbGdoa2dCWlFNRUFTNHdFUVFNUGErMWNxbkd1dEJhVTZGK0FnRVFnQ3NNZ1kwWm5oK0kwY3dUL2haS2RUeXZoOTJYQVN5OHJQYVcxK0RaT3JSdUxaNzFvYVBFOCtBcng4R0k6Om12MUZJZjU3MFp1NmpRcWVVd1dzdDZLZURHSDBPVjVzSllFR0ZaYndnRG5iOFl1V0x0ZitxU242YVJ5OTBCbWRTRFRZUytGcWFUb1dKdEV2VHdLQ3cxcXRWNVZ4U0hZTVBia3dCSU4wcURPUFNVZG05eGNmVktBTFhHNUhVenR2RFA5Rk14d29kVjlUV0ZHQ1l6SytmVjBzVWhtTXl3cz0=');
         amazon_connect('contactAttributes', { department, name, email, invoice, question });
         amazon_connect('supportedMessagingContentTypes', [
             'text/plain','text/markdown',
